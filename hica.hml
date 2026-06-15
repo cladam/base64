@@ -1,0 +1,13 @@
+@project {
+    name: "base64"
+    version: "1.0.1"
+    license: "MIT"
+    entry: "src/base64"
+}
+
+@description {
+    summary: "Base64 encoding and decoding library for hica"
+    author: "Claes Adamsson"
+    homepage: "https://cladam.github.io/hica"
+    repository: "https://github.com/cladam/base64"
+}
