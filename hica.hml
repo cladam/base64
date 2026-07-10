@@ -8,6 +8,6 @@
 @description {
     summary: "Base64 encoding and decoding library for hica"
     author: "Claes Adamsson"
-    homepage: "https://cladam.github.io/hica"
+    homepage: "https://www.hica.dev"
     repository: "https://github.com/cladam/base64"
 }

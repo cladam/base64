@@ -2,23 +2,27 @@
 
 Base64 encoding and decoding library for [hica](https://cladam.github.io/hica).
 
-Pure functions, no effects — a showcase of hica's functional style.
+Pure functions, no effects. A showcase of hica's functional style.
 
 Full UTF-8 support: correctly encodes and decodes multi-byte characters.
 
 ## Installation
 
-Add as a git submodule to your hica project:
+### 1. Add the package
 
 ```sh
-git submodule add https://github.com/cladam/base64.git lib/base64
+hica add base64
+hica fetch
 ```
 
-Then import the library:
+This records the dependency in `hica.hml` and downloads the package into `vendor/`.
 
-```rust
-import "./lib/base64/src/base64"
+### 2. Import
+
+```hica
+import "base64"
 ```
+
 ## Usage
 
 ```rust
@@ -50,20 +54,6 @@ fun main() {
 | `b64_decode_url(input: string) : result<string, string>` | Decode URL-safe base64 |
 
 Decoding returns `Ok(decoded_string)` on success or `Err(message)` on invalid input (bad characters or invalid length).
-
-## Project Structure
-
-```sh
-src/
-  base64.hc    # barrel module (pub imports)
-  types.hc     # alphabet constants + UTF-8 byte conversion
-  encode.hc    # encoding functions
-  decode.hc    # decoding functions
-tests/
-  test-base64.hc
-examples/
-  basic.hc
-```
 
 ## Development
 
