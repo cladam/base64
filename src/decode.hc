@@ -13,22 +13,14 @@ pub fun b64_decode_url(input: string) : result<string, string> =>
 pub fun decode_with(input: string, alphabet: string) : result<string, string> {
   let cleaned = strip_padding(input)
   let indices = map(chars(cleaned), (c) => char_index(c, alphabet))
-  if any(indices, (i) => i < 0) { Err("invalid base64 character") }
+  if any(indices, (m) => is_none(m)) { Err("invalid base64 character") }
   else if length(indices) % 4 == 1 { Err("invalid base64 length") }
-  else { Ok(bytes_to_str(decode_to_bytes(indices))) }
+  else { Ok(bytes_to_str(decode_to_bytes(map(indices, (m) => unwrap_maybe_or(m, 0))))) }
 }
 
-// Find character position in alphabet, -1 if not found
-pub fun char_index(c: char, alphabet: string) : int {
-  let s = from_chars([c])
-  find_in(alphabet, s, 0)
-}
-
-pub fun find_in(haystack: string, needle: string, pos: int) : int {
-  if pos >= str_length(haystack) { -1 }
-  else if haystack[pos:pos + 1] == needle { pos }
-  else { find_in(haystack, needle, pos + 1) }
-}
+// Find character position in alphabet, None if not found
+pub fun char_index(c: char, alphabet: string) : maybe<int> =>
+  index_of(alphabet, char_to_string(c))
 
 // Strip = padding
 pub fun strip_padding(s: string) : string {
@@ -47,7 +39,7 @@ pub fun decode_to_bytes(indices: list<int>) =>
       let byte0 = a * 4 + b / 16
       let byte1 = (b % 16) * 16 + c / 4
       let byte2 = (c % 4) * 64 + d
-      concat([[byte0, byte1, byte2], decode_to_bytes(rest)])
+      [byte0, byte1, byte2] + decode_to_bytes(rest)
     },
     _ => []
   }

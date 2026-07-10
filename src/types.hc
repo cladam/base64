@@ -23,7 +23,7 @@ pub fun char_to_utf8(c: char) {
 
 // Convert a string to UTF-8 bytes
 pub fun str_to_bytes(s: string) =>
-  concat(map(chars(s), (c) => char_to_utf8(c)))
+  flat_map(chars(s), char_to_utf8)
 
 // Decode a 2-byte UTF-8 sequence to a codepoint
 pub fun utf8_2(b0: int, b1: int) =>
